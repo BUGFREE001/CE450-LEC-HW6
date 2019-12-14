@@ -1,0 +1,183 @@
+
+#1
+
+def is_link(s):
+    return s == [] or (len(s) == 2 and is_link(s[1]))
+
+
+def link(first, rest):
+    assert is_link(rest), "rest must be a linked list."
+    return [first, rest]
+
+
+def cntn_link(s, elm):
+    while s != []:
+        if s[0]==elm:
+            return True
+        s = s[1]
+    return False
+
+
+print(cntn_link (link(1, link(2, link(3, []))), 4))
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+
+#2
+
+def prnt_lnk(s):
+    print('<',end="")
+    index=0
+    while s != []:
+        if index==0:
+            print(s[0],end="")
+        else:
+            print(" "+str(s[0]),end="")
+        s = s[1]
+        index+=1
+    print('>')
+
+prnt_lnk(link(1, link(2, link(3, []))))
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+
+#3
+
+def rvrs_lnk(s):
+    dict={}
+    
+    index = 0
+    while s != []: 
+        dict[index]=s[0]
+        s, index = s[1], index + 1 
+    
+    
+    if index<=1:
+        return s
+    
+    pos=0
+    newlinkList= link(dict[pos],[])
+    pos+=1
+    
+    while index>pos:
+        newlinkList= link(dict[pos],newlinkList)
+        pos+=1
+        
+    return newlinkList     
+
+a=rvrs_lnk( link(1, link(2, link(3,[]))))
+prnt_lnk(a) 
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+
+#4
+
+def srt (lnk):
+    while lnk[1] != []:
+        nextlnk=lnk[1]
+        if lnk[0]>nextlnk[0]:
+            return False
+        lnk = nextlnk
+    return True    
+
+a=srt( link(1, link(2, link(2,[]))))
+print(a) 
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+
+#5
+
+def sum_lnk(lnk, g):
+    total=0
+    while lnk != []:
+        total+=g(lnk[0])
+        lnk = lnk[1]
+    return total    
+
+sqr = lambda x: x * x
+dbl = lambda y: 2 * y
+lnk1 = link(1, link(2, link(3, link(4,[]))))
+print(sum_lnk (lnk1, sqr)) 
+lnk2 = link(3, link(5, link(4, link(6,[]))))
+print(sum_lnk (lnk2, dbl))
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+
+#6
+
+def change(lnk, u, v):
+    head=lnk
+    while lnk != []:
+        if lnk[0]==u:
+            lnk[0]=v
+        lnk = lnk[1]
+    return head
+    
+lnk = link(1, link(2, link(3,[])))
+n=change(lnk, 3, 1)
+prnt_lnk(n)
+m=change(n, 1, 2)
+prnt_lnk(m)
+prnt_lnk(change(m, 5, 1))
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+
+
+#7
+
+def apnd(lnk, m):
+    head=lnk
+    while lnk[1] != []:
+        lnk = lnk[1]
+    lnk[1]=link(m,[])    
+    return head
+    
+lnk = link(1, link(2, link(3,[])))
+n = apnd (lnk, 7)
+prnt_lnk(n)
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+
+#8
+
+def insrt(lnk, elm, ind):
+    head=lnk
+    index=0
+    while lnk[1] != []:
+        if index== ind-1:
+            lnk[1]=link(elm,lnk[1])
+            return head
+        lnk = lnk[1]
+        index+=1
+    
+    #the end
+    lnk[1]=link(elm,[])    
+    
+    return head
+    
+lnk = link(1, link(2, link(3,[])))
+n = insrt (lnk, 2019, 3)
+prnt_lnk(n)
+m= insrt(n, 2020, 20)
+prnt_lnk(m)
+
